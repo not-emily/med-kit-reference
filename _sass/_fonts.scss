@@ -1,0 +1,60 @@
+// Pinned typefaces ----------------------------------------------------------
+// The sheet is fitted to within a millimetre or two, so the font it renders in
+// cannot be left to whatever the printing machine happens to have. These are
+// self-hosted and subsetted, which fixes the metrics — and therefore the line
+// breaking and the panel fit — on any machine, online or off.
+//
+// The family is Liberation Sans, because that is what this layout was measured
+// against: the stack used to lead with Inter, which is not installed here, so
+// every proof so far has silently rendered in Liberation. Pinning Inter would
+// have changed the layout rather than frozen it.
+//
+// Named "MedKit Sans" rather than "Liberation Sans" so a differently-versioned
+// system copy of the same name can never be substituted for these files.
+//
+// Files are built from /usr/share/fonts/liberation and /usr/share/fonts/noto,
+// subsetted to Latin-1 + Latin Extended-A + punctuation. See assets/fonts/.
+
+$font-path: "../fonts";
+
+@font-face {
+  font-family: "MedKit Sans";
+  src: url("#{$font-path}/liberation-sans-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MedKit Sans";
+  src: url("#{$font-path}/liberation-sans-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MedKit Sans";
+  src: url("#{$font-path}/liberation-sans-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+// The warning sign is not in Liberation Sans, so until now every triangle on
+// the sheet — the cover note, every warning block, the cautions chip — was
+// being drawn by whatever fallback the machine offered. This subset is that
+// one glyph and nothing else, so it is pinned too.
+@font-face {
+  font-family: "MedKit Symbols";
+  src: url("#{$font-path}/symbols-warning.woff2") format("woff2");
+  unicode-range: U+26A0;
+  font-display: swap;
+}
+
+// Only 400 and 700 are declared, which is what the system copy offered too:
+// weights 800 and 900 in the design match down to 700 and 500 matches to 400,
+// with no synthesis, exactly as they did before. Arial and Helvetica trail the
+// stack because they are metric-compatible with Liberation, so even a failed
+// font load reflows nothing.
+$font-stack: "MedKit Sans", "MedKit Symbols", Arial, Helvetica, sans-serif;
