@@ -142,6 +142,21 @@
 .caution-list { margin: 0; }
 .warn-number { background: #d19b45 !important; }
 
+// Sized in em so it tracks the text it sits beside, and filled with
+// currentColor so each context supplies its own.
+.icon-warn {
+  width: 1em;
+  height: 1em;
+  vertical-align: -.14em;
+}
+// In the chip it is the grid item rather than a glyph on a baseline, so
+// place-items centres it exactly.
+.warn-number .icon-warn {
+  display: block;
+  width: 1.15em;
+  height: 1.15em;
+}
+
 .notes-lines { display: grid; }
 .notes-lines span:not(.label) {
   border-bottom-style: solid;

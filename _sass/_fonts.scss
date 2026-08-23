@@ -33,16 +33,7 @@ $font-path: "../fonts";
   font-display: swap;
 }
 
-// U+26A0 is not in Liberation Sans; without this the warning triangles fall
-// back to whatever the machine offers. One glyph, nothing else.
-@font-face {
-  font-family: "MedKit Symbols";
-  src: url("#{$font-path}/symbols-warning.woff2") format("woff2");
-  unicode-range: U+26A0;
-  font-display: swap;
-}
-
 // Only 400 and 700 exist: 800 and 900 in the design match down to 700, and 500
 // to 400, with no synthesis. Arial and Helvetica trail the stack because they
 // are metric-compatible with Liberation, so a failed load reflows nothing.
-$font-stack: "MedKit Sans", "MedKit Symbols", Arial, Helvetica, sans-serif;
+$font-stack: "MedKit Sans", Arial, Helvetica, sans-serif;

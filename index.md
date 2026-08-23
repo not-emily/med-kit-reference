@@ -76,7 +76,7 @@ title: Travel OTC Medication Reference
           <p class="audience">Adults + children 12+</p>
         </div>
         <div class="cover-note">
-          <strong>&#9888; CHECK ACTIVE INGREDIENTS</strong>
+          <strong>{% include icon-warning.html %} CHECK ACTIVE INGREDIENTS</strong>
           <span>Several products here share an active ingredient. Read every label before combining.</span>
         </div>
       </article>
@@ -108,7 +108,7 @@ title: Travel OTC Medication Reference
             {%- endif %}
 
             {%- if med.warnings.size > 0 %}
-            <p class="info warn"><span class="label">&#9888;</span><span class="lines">{% for warning in med.warnings %}<span class="line">{{ warning }}</span>{% endfor %}</span></p>
+            <p class="info warn"><span class="label">{% include icon-warning.html %}</span><span class="lines">{% for warning in med.warnings %}<span class="line">{{ warning }}</span>{% endfor %}</span></p>
             {%- endif %}
 
             <p class="info uses"><span class="label">FOR</span><span class="lines"><span class="line">{{ med.uses }}</span></span></p>
@@ -126,7 +126,7 @@ title: Travel OTC Medication Reference
       <article class="panel cautions" style="--panel:{{ pn }}">
         <span class="panel-num">{{ pn }}</span>
         <header class="category-header">
-          <span class="category-number warn-number">&#9888;</span>
+          <span class="category-number warn-number">{% include icon-warning.html %}</span>
           <h2>Before You Take Anything</h2>
         </header>
         <ul class="caution-list">

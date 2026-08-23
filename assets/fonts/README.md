@@ -10,9 +10,8 @@ machine — including one with no network.
 | `liberation-sans-regular.woff2` | Liberation Sans Regular | Latin-1, Latin Extended-A, punctuation |
 | `liberation-sans-bold.woff2` | Liberation Sans Bold | as above |
 | `liberation-sans-italic.woff2` | Liberation Sans Italic | as above |
-| `symbols-warning.woff2` | Noto Sans Symbols 2 | U+26A0 only |
 
-Both families are licensed under the SIL Open Font License 1.1, included here
+Liberation Sans is licensed under the SIL Open Font License 1.1, included here
 as `OFL-1.1.txt`. The license permits redistribution of these subsets.
 
 ## Why Liberation Sans
@@ -28,10 +27,9 @@ was actually tuned to.
 `Arial, Helvetica` trail the stack because they are metric-compatible with
 Liberation Sans, so even a failed font load reflows nothing.
 
-The warning triangle is worth calling out: U+26A0 is **not** in Liberation Sans,
-so before this every triangle on the sheet was drawn by an arbitrary system
-fallback. `symbols-warning.woff2` is that single glyph, scoped with
-`unicode-range` so it applies to nothing else.
+Note that U+26A0 is **not** in Liberation Sans. The warning triangles are inline
+SVG (`_includes/icon-warning.html`) rather than a character, so they need no
+font at all — but any warning glyph typed into the YAML would fall back.
 
 ## Rebuilding the subsets
 
@@ -46,8 +44,6 @@ for face in Regular Bold Italic; do
     --output-file="liberation-sans-$(echo $face | tr A-Z a-z).woff2"
 done
 
-pyftsubset /usr/share/fonts/noto/NotoSansSymbols2-Regular.ttf \
-  --unicodes="U+26A0" --flavor=woff2 --output-file=symbols-warning.woff2
 ```
 
 If you add a medication whose name uses a character outside Latin Extended-A,
