@@ -80,6 +80,18 @@
   flex: 0 0 auto;
   display: grid;
   place-items: center;
+  // Optical centring. `place-items: center` centres the LINE BOX, but a digit
+  // only occupies the part of it above the baseline — the empty descent space
+  // below leaves the glyph sitting high. Measured off the print output at
+  // 7.6% of the chip — 40px of clearance above the 1 against 65px below,
+  // which is 0.41mm on a 2.469mm font size, so 0.166em. The warning triangle
+  // runs about the same.
+  //
+  // Padding the top shifts the centred box down by HALF its value, so this is
+  // twice the measured error. Expressed in em it is a property of the font
+  // rather than of the chip, so one value serves both the 5.4mm print chip
+  // and the 2.25rem screen one.
+  padding-top: .166em * 2;
   background: var(--ink);
   color: white;
   font-weight: 900;
