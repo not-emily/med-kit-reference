@@ -33,7 +33,7 @@ categories:
         max: Do not take more than 2 caplets in 24 hours.
         warnings:
           - Do not use for 10 or more days per month.
-          - Under 18 years old: ask a doctor.
+          - "Under 18 years old: ask a doctor."
         uses: Migraine
 
   - id: 2

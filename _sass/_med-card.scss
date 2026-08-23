@@ -1,3 +1,42 @@
+// Sheet geometry -----------------------------------------------------------
+// One US Letter LANDSCAPE sheet, single-sided. Cut out a 260 x 171.2mm block,
+// fold it in half along the horizontal centre crease with the printed side
+// OUT, then accordion fold the resulting 260 x 85.6mm strip on the four
+// vertical creases. Finished packet is a credit-card footprint read in
+// portrait (52 x 85.6mm), panels 1-5 on one face and 6-10 on the other.
+//
+// Cards are portrait because the fixed overhead of a med card (padding,
+// borders, info-row rules) is ~8mm no matter the shape. Against a 39mm
+// landscape panel that is 40% of the budget; against a 72mm portrait panel
+// it is 22%. The extra line wrapping in a narrow column costs less than the
+// overhead reclaimed, which is what stopped the panels overflowing.
+//
+// 52mm rather than the true card 53.98mm. Five columns is the binding
+// constraint: 5 x 53.98 = 269.9mm against Letter's 279.4mm long edge leaves
+// 4.75mm a side, which is inside the unprintable margin of most printers —
+// and well inside Chrome's "Margins: Default", which overrides @page and can
+// eat 16mm a side. 52mm gives a 260mm sheet and 9.7mm a side to absorb that.
+// The finished card is 2mm narrower than a credit card and still fills the
+// sleeve.
+
+$card-w: 52mm;
+$card-h: 85.6mm;
+$cols: 5;
+$rows: 2;
+$sheet-w: $card-w * $cols;   // 260mm
+$sheet-h: $card-h * $rows;   // 171.2mm
+$pad: 2.5mm;
+$rule: .18mm;
+$crease: #b9bec3;
+$cut: #9aa0a6;
+
+// Print type scale. Tune here — every print size derives from these.
+$fs-body: 5.6pt;
+$fs-label: 4.6pt;
+$fs-name: 7.4pt;
+$fs-ingr: 5.1pt;
+$fs-uses: 5.3pt;
+
 :root {
   --ink: #20252b;
   --muted: #68717b;
@@ -21,6 +60,8 @@ body {
   line-height: 1.35;
 }
 
+// Screen chrome -------------------------------------------------------------
+
 .screen-intro {
   max-width: 1100px;
   margin: 0 auto;
@@ -28,8 +69,16 @@ body {
 }
 
 .screen-intro h1 { margin: .15rem 0 .4rem; }
-.screen-intro p { color: var(--muted); }
-.screen-intro button {
+.screen-intro > p { color: var(--muted); }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.controls button {
   border: 0;
   border-radius: 999px;
   padding: .7rem 1rem;
@@ -38,26 +87,67 @@ body {
   font: inherit;
   cursor: pointer;
 }
-
-.eyebrow {
-  margin: 0 0 .25rem;
-  font-size: .62rem;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .85rem;
   color: var(--muted);
+  cursor: pointer;
 }
 
-.foldout {
+.capacity {
+  padding: .6rem .8rem;
+  border-radius: 8px;
+  background: #e4e8e3;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.capacity strong { color: var(--ink); }
+.capacity.over { background: #fdeae4; color: #8a3b26; }
+.capacity.over strong { color: #8a3b26; }
+
+.folding {
+  margin: 1rem 0 0;
+  font-size: .85rem;
+  color: var(--muted);
+}
+.folding summary { cursor: pointer; font-weight: 700; color: var(--ink); }
+.print-settings {
+  margin: .6rem 0;
+  padding: .6rem .8rem;
+  border-left: 3px solid #d19b45;
+  background: #fff8eb;
+  color: var(--ink);
+}
+.folding ol { margin: .6rem 0; padding-left: 1.2rem; }
+.folding li { margin-bottom: .3rem; }
+
+.screen-footer {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  color: var(--muted);
+  font-size: .75rem;
+}
+
+// Sheet ---------------------------------------------------------------------
+
+.sheet-wrap { padding: 1rem; }
+
+.sheet {
   display: grid;
   grid-template-columns: repeat(2, minmax(320px, 430px));
   gap: 1rem;
   max-width: 900px;
   margin: 0 auto 2rem;
-  padding: 1rem;
 }
 
+// Fold guides: only meaningful on the printable sheet.
+.creases { display: none; }
+
 .panel {
+  position: relative;
   min-height: 600px;
   padding: 1.15rem;
   background: var(--paper);
@@ -67,6 +157,17 @@ body {
   break-inside: avoid;
 }
 
+.panel-num {
+  position: absolute;
+  top: .5rem;
+  right: .7rem;
+  font-size: .6rem;
+  font-weight: 800;
+  color: var(--line);
+}
+
+// Cover panel
+
 .cover {
   display: flex;
   flex-direction: column;
@@ -75,7 +176,7 @@ body {
 
 .cover-mark {
   display: inline-block;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   padding: .5rem .65rem;
   border-left: 5px solid var(--accent-1);
   font-size: .7rem;
@@ -89,28 +190,18 @@ body {
   line-height: .98;
 }
 
-.audience {
-  font-weight: 700;
+.eyebrow {
+  margin: 0 0 .25rem;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
-.category-index { margin: 1.5rem 0; }
-.index-row {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  padding: .5rem 0;
-  border-bottom: 1px solid var(--line);
-}
-.index-row strong {
-  width: 1.7rem;
-  height: 1.7rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--ink);
-  color: white;
-  font-size: .75rem;
+.audience {
+  font-weight: 700;
+  color: var(--muted);
 }
 
 .cover-note {
@@ -122,6 +213,8 @@ body {
   background: #fff7e8;
   font-size: .72rem;
 }
+
+// Category panels
 
 .category-header {
   display: flex;
@@ -143,8 +236,13 @@ body {
   font-weight: 900;
 }
 .category-header h2 { margin: 0; font-size: 1.25rem; }
+.cont {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--muted);
+}
 
-.med-list { display: grid; gap: .65rem; }
+.med-list { display: grid; gap: .65rem; align-content: start; }
 
 .med-card {
   padding: .75rem;
@@ -153,33 +251,40 @@ body {
   background: white;
 }
 
-.med-title {
-  display: flex;
-  gap: .55rem;
-  align-items: flex-start;
-  margin-bottom: .55rem;
+.med-name {
+  margin: 0 0 .45rem;
+  font-size: .95rem;
+}
+.med-name em {
+  display: block;
+  margin-top: .08rem;
+  color: var(--muted);
+  font-size: .68rem;
+  font-style: normal;
+  font-weight: 400;
 }
 .med-id {
-  flex: 0 0 auto;
+  display: inline-block;
+  margin-right: .45rem;
   padding: .25rem .35rem;
   border-radius: 6px;
   background: var(--ink);
   color: white;
   font-size: .64rem;
   font-weight: 900;
+  vertical-align: .1em;
 }
-.med-title h3 { margin: 0; font-size: .95rem; }
-.med-title p { margin: .08rem 0 0; color: var(--muted); font-size: .68rem; }
 
-.info-block {
+.info {
   display: grid;
-  grid-template-columns: 3.6rem 1fr;
+  grid-template-columns: 3.4rem 1fr;
   gap: .4rem;
+  margin: 0;
   padding: .42rem 0;
   border-top: 1px solid var(--line);
   font-size: .69rem;
 }
-.info-block p { margin: 0; }
+.line { display: block; }
 .label {
   font-size: .56rem;
   font-weight: 900;
@@ -187,24 +292,40 @@ body {
   color: var(--muted);
 }
 
-.max-block p { font-weight: 800; }
+.info.max .lines { font-weight: 800; }
 
-.warning-block {
-  margin-top: .4rem;
+.info.warn {
+  margin-top: .3rem;
   padding: .45rem .55rem;
+  border-top: 0;
   border-left: 3px solid #d19b45;
   background: #fff8eb;
-  font-size: .67rem;
 }
-.warning-block .label { display: block; color: #8b651f; margin-bottom: .15rem; }
-.warning-block p { margin: .12rem 0 0; }
+.info.warn .label { color: #8b651f; }
 
-.uses {
-  margin: .55rem 0 0;
-  font-size: .62rem;
+.info.uses {
   color: var(--muted);
+  font-size: .62rem;
 }
-.uses span { font-weight: 900; letter-spacing: .06em; }
+
+// Cautions panel
+
+.caution-list {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: .75rem;
+}
+.caution-list li { margin-bottom: .4rem; }
+.warn-number { background: #d19b45 !important; }
+
+.notes-lines {
+  display: grid;
+  gap: .9rem;
+  margin-top: 1rem;
+}
+.notes-lines span:not(.label) { border-bottom: 1px solid var(--line); }
+
+// Category accents
 
 .category-1 .category-number { background: var(--accent-1); }
 .category-2 .category-number { background: var(--accent-2); }
@@ -213,63 +334,219 @@ body {
 .category-5 .category-number { background: var(--accent-5); }
 .category-6 .category-number { background: var(--accent-6); }
 
-.screen-footer {
-  max-width: 900px;
-  margin: 0 auto 2rem;
-  padding: 0 1rem;
-  color: var(--muted);
-  font-size: .75rem;
+@media (max-width: 760px) {
+  .sheet { grid-template-columns: 1fr; }
+  .panel { min-height: auto; }
 }
 
-@media (max-width: 760px) {
-  .foldout { grid-template-columns: 1fr; }
-  .panel { min-height: auto; }
+// Print geometry ------------------------------------------------------------
+// Shared by the real print output and the on-screen "actual size" preview.
+
+@mixin print-sheet {
+  .sheet-wrap { padding: 0; }
+
+  .sheet {
+    position: relative;   // containing block for the crease overlay
+    width: $sheet-w;
+    height: $sheet-h;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat($cols, $card-w);
+    grid-template-rows: repeat($rows, $card-h);
+    grid-auto-flow: row;
+    gap: 0;
+    // Cut line.
+    outline: .3mm solid $cut;
+    background: white;
+  }
+
+  .panel {
+    width: $card-w;
+    height: $card-h;
+    min-height: 0;
+    padding: $pad;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  // Creases are their own elements, laid over the panels at absolute mm
+  // positions on the sheet, and drawn with dashed BORDERS.
+  //
+  // Two earlier mechanisms failed here. As panel borders, a crease sits on
+  // the seam between two siblings, and half the panels are rotated 180deg,
+  // which moves that seam relative to the device pixel grid and made
+  // individual creases drop out. As repeating-linear-gradients they were
+  // bitmap tiles, and Chrome caps the tile count when rasterising for print
+  // — the four verticals needed ~71 tiles and survived, the horizontal
+  // needed ~108 and was cut off at 239mm of 260mm. A dashed border is
+  // stroked natively at whatever length it needs, so neither failure applies.
+  .creases {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    span {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(#{$card-w} * var(--col));
+      border-left: $rule dashed $crease;
+    }
+
+    .crease-h {
+      top: $card-h;
+      right: 0;
+      bottom: auto;
+      left: 0;
+      border-left: 0;
+      border-top: $rule dashed $crease;
+    }
+  }
+
+  // Panels 6-10 print upside down on purpose. Folding the bottom half behind
+  // the top half rotates it 180 degrees, so this cancels out and the back
+  // face reads correctly when the finished card is turned over left-to-right.
+  .panel:nth-child(n+6) { transform: rotate(180deg); }
+
+  .panel-num {
+    top: 1.2mm;
+    right: 1.6mm;
+    font-size: 4.6pt;
+    color: #c7ccd0;
+  }
+
+  // Cover
+  .cover-mark {
+    margin-bottom: 0;
+    padding: 1mm 1.4mm;
+    border-left-width: 1.2mm;
+    font-size: 5pt;
+  }
+  .cover h1 { font-size: 15pt; margin-top: 2.5mm; }
+  .eyebrow { font-size: 4.6pt; margin: 1.8mm 0 .6mm; }
+  .audience { font-size: 5.4pt; margin: 1mm 0 0; }
+  .cover-note {
+    gap: .3mm;
+    padding: 1.4mm;
+    border-radius: 1mm;
+    border-width: .2mm;
+    font-size: 4.8pt;
+    line-height: 1.2;
+  }
+
+  // Category header
+  .category-header {
+    gap: 1.5mm;
+    margin-bottom: 1.6mm;
+    padding-bottom: 1.2mm;
+    border-bottom-width: .35mm;
+  }
+  .category-number {
+    width: 5.4mm;
+    height: 5.4mm;
+    border-radius: 1.2mm;
+    font-size: 7pt;
+  }
+  .category-header h2 { font-size: 8.5pt; }
+  .cont { font-size: 6pt; }
+
+  // Medications
+  .med-list { gap: 1.6mm; }
+  .med-card {
+    padding: 1.5mm;
+    border-width: .18mm;
+    border-radius: 1mm;
+  }
+  .med-name {
+    margin: 0 0 1mm;
+    font-size: $fs-name;
+    line-height: 1.1;
+  }
+  .med-name em { font-size: $fs-ingr; margin-top: .3mm; line-height: 1.15; }
+  .med-id {
+    margin-right: 1mm;
+    padding: .4mm .8mm;
+    border-radius: .8mm;
+    font-size: 4.8pt;
+  }
+
+  // Run-in labels. A 7.5mm label gutter costs 17% of the usable width of a
+  // portrait panel against 10% of a landscape one, so the label goes inline
+  // and the text gets the whole measure.
+  .info {
+    display: block;
+    padding: .7mm 0;
+    border-top-width: .15mm;
+    font-size: $fs-body;
+    line-height: 1.15;
+  }
+  .label {
+    display: inline;
+    margin-right: 1.1mm;
+    font-size: $fs-label;
+    letter-spacing: .04em;
+  }
+  // Run the individual instructions together rather than breaking each to
+  // its own line.
+  .line { display: inline; }
+  .line + .line::before { content: " "; }
+
+  .info.warn {
+    margin-top: .8mm;
+    padding: 1mm 1.2mm;
+    border-left-width: .6mm;
+  }
+  .info.uses { font-size: $fs-uses; }
+
+  // Cautions panel
+  .caution-list { padding-left: 3mm; font-size: 5.2pt; line-height: 1.2; }
+  .caution-list li { margin-bottom: 1mm; }
+  .notes-lines { gap: 3.2mm; margin-top: 2.5mm; }
+  .notes-lines span:not(.label) { border-bottom-width: .15mm; }
+}
+
+// On-screen preview at (approximately) actual size. Browser zoom must be 100%.
+// Scoped to screen: `.reference.previewing x` outranks `.reference x`, so
+// without this the preview padding wins over the print margins whenever the
+// preview toggle happens to be on at print time.
+@media screen {
+  .reference.previewing {
+    @include print-sheet;
+
+    .sheet-wrap {
+      padding: 2rem 1rem;
+      overflow-x: auto;
+    }
+    .sheet { box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+
+    // Print clips a panel that overruns its 85.6mm; the preview lets it spill
+    // so you can see the problem before you spend a sheet of paper on it.
+    .panel { overflow: visible; }
+  }
 }
 
 @media print {
   @page { size: letter landscape; margin: 0; }
-  body { background: white; }
+
+  body {
+    background: white;
+    // The category chips, warning panels and paper tint carry meaning, so
+    // don't leave them to the browser's "background graphics" checkbox.
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   .no-print { display: none !important; }
 
-  /* Three credit-card-width columns fit on letter landscape.
-     Heights are allowed to grow so medication content is never clipped. */
-  .foldout {
-    width: 256.8mm;
-    margin: 0 auto;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 85.6mm);
-    grid-auto-rows: auto;
-    gap: 0;
-    align-content: start;
-  }
+  .reference {
+    @include print-sheet;
 
-  .panel {
-    width: 85.6mm;
-    min-height: 0;
-    height: auto;
-    padding: 3.5mm;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    // No wrapper padding. Whatever margin the printer or the print dialog
+    // imposes is the margin; the sheet just centres itself in what is left.
+    // Adding our own padding on top only pushed the block off the right edge.
+    .sheet-wrap { padding: 0; }
+    .sheet { margin: 0 auto; }
   }
-
-  .cover h1 { font-size: 18pt; }
-  .cover-mark { margin-bottom: 9mm; }
-  .category-header { margin-bottom: 2.5mm; padding-bottom: 2mm; }
-  .category-header h2 { font-size: 10.5pt; }
-  .category-number { width: 7mm; height: 7mm; font-size: 8pt; }
-  .med-list { gap: 1.8mm; }
-  .med-card { padding: 2mm; border-radius: 2mm; }
-  .med-title { margin-bottom: 1.5mm; }
-  .med-title h3 { font-size: 7.5pt; }
-  .med-title p { font-size: 5.3pt; }
-  .med-id { font-size: 5pt; padding: 1mm; }
-  .info-block { grid-template-columns: 12mm 1fr; gap: 1.5mm; padding: 1.1mm 0; font-size: 5.4pt; }
-  .label { font-size: 4.5pt; }
-  .warning-block { margin-top: 1mm; padding: 1.2mm; font-size: 5.2pt; }
-  .uses { margin-top: 1.5mm; font-size: 4.8pt; }
 }
