@@ -5,6 +5,12 @@
 @media screen {
   body { background: #eceae6; }
 
+  // The mirror of .no-print. Nothing here restores the display, because the
+  // only rules that ever reveal these blocks are in the print mixin — included
+  // both by @media print, where this rule does not exist, and by the preview
+  // below, whose deeper selectors outrank it.
+  .print-only { display: none; }
+
   // Page chrome (all of it inside .no-print)
 
   .screen-intro {
@@ -178,6 +184,17 @@
       }
       .info.uses { font-size: .62rem; }
 
+      // The card's one affordance the paper cannot have, so it reads as an
+      // extra rather than as another labelled row: no rule above it, no gutter.
+      .med-more { margin: .5rem 0 0; font-size: .62rem; }
+      .med-more a {
+        color: var(--muted);
+        text-decoration-color: var(--line);
+        text-underline-offset: .2em;
+      }
+      .med-more a:hover,
+      .med-more a:focus-visible { color: var(--ink); text-decoration-color: currentColor; }
+
       .caution-list { padding-left: 1rem; font-size: .75rem; }
       .caution-list li { margin-bottom: .4rem; }
       .notes-lines { gap: .9rem; margin-top: 1rem; }
@@ -205,5 +222,12 @@
     // Print clips an overrunning panel; the preview spills it so you can see
     // the problem first. Depth must match the mixin's or it loses to it.
     .sheet .panel { overflow: visible; }
+
+    // Screen-only panel content is dropped here for the same reason: the point
+    // of the preview is what comes out of the printer, and a link that prints
+    // as nothing would still take up height and mask a panel that overruns.
+    // Scoped to .sheet so the page chrome above — itself .no-print, and where
+    // the toggle you would need to switch back lives — stays put.
+    .sheet .no-print { display: none; }
   }
 }

@@ -58,6 +58,21 @@
   background: #fff7e8;
 }
 
+// Cover QR. Paper only: on screen you are already at the page it points to,
+// so the link out is what a screen reader of the card wants instead. Both the
+// display and the sizing live in the print mixin, which is the only place the
+// block is ever visible — see the .print-only note in _screen.scss.
+
+.qr { flex: 0 0 auto; }
+.qr-caption { color: var(--muted); }
+.qr-caption > * { display: block; }
+.qr-caption strong {
+  color: var(--ink);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.qr-url { font-weight: 700; }
+
 // Category panels
 
 .category-header {
@@ -155,6 +170,16 @@
   display: block;
   width: 1.15em;
   height: 1.15em;
+}
+
+// Same em sizing as .icon-warn, and currentColor for the same reason: it sits
+// inside the link, so it picks up the muted-to-ink hover rather than fighting
+// it. Only ever rendered inside a screen-only link, so its one size lives here.
+.icon-external {
+  width: .85em;
+  height: .85em;
+  margin-left: .35em;
+  vertical-align: -.06em;
 }
 
 .notes-lines { display: grid; }

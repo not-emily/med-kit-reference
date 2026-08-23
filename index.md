@@ -75,6 +75,13 @@ title: Travel OTC Medication Reference
           <h1>Medication<br>Guide</h1>
           <p class="audience">Adults + children 12+</p>
         </div>
+        <div class="cover-qr print-only">
+          {%- include qr-medkit.svg -%}
+          <span class="qr-caption">
+            <strong>More detail online</strong>
+            <span class="qr-url">medkit.1bit2bit.dev</span>
+          </span>
+        </div>
         <div class="cover-note">
           <strong>{% include icon-warning.html %} CHECK ACTIVE INGREDIENTS</strong>
           <span>Several products here share an active ingredient. Read every label before combining.</span>
@@ -112,6 +119,10 @@ title: Travel OTC Medication Reference
             {%- endif %}
 
             <p class="info uses"><span class="label">FOR</span><span class="lines"><span class="line">{{ med.uses }}</span></span></p>
+
+            {%- if med.drugs_url %}
+            <p class="med-more no-print"><a href="{{ med.drugs_url }}" target="_blank" rel="noopener external">Full label on drugs.com{% include icon-external.html %}</a></p>
+            {%- endif %}
           </section>
 
           {%- assign next_slot = forloop.index | modulo: per -%}
