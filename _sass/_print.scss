@@ -193,13 +193,31 @@
   }
   .no-print { display: none !important; }
 
+  // Centre the sheet on the page so there is trimming margin on every side
+  // rather than a cut line hard against the top edge.
+  //
+  // Done with percentage heights rather than a fixed top margin, because a
+  // fixed one recreates the bug that used to push the sheet off the right:
+  // whatever margin the print dialog imposes comes first, and ours stacks on
+  // top of it, so the bottom of the sheet would fall off once that margin
+  // passed ~11mm. A percentage resolves against the page CONTENT box, which
+  // already has the dialog's margin subtracted, so the centring stays true at
+  // any margin up to the 22mm of slack the sheet has. 100vh would measure the
+  // full page instead of the content box and risk spilling a second sheet.
+  html, body { height: 100%; }
+
   .reference {
     @include print-sheet;
 
-    // No wrapper padding. Whatever margin the printer or the print dialog
-    // imposes is the margin; the sheet just centres itself in what is left.
-    // Adding our own padding on top only pushed the block off the right edge.
-    .sheet-wrap { padding: 0; }
+    height: 100%;
+
+    .sheet-wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
     .sheet { margin: 0 auto; }
   }
 }
