@@ -21,7 +21,7 @@ title: Travel OTC Medication Reference
 
     <div class="controls">
       <button onclick="window.print()">Print sheet</button>
-      <label><input type="checkbox" id="preview-toggle" onchange="document.querySelector('.reference').classList.toggle('previewing', this.checked)"> Show the print sheet at actual size</label>
+      <label title="Lays the panels out as the printed sheet, at actual size when the browser is at 100% zoom. Overflowing content is left visible here rather than clipped, so you can catch it before printing."><input type="checkbox" id="preview-toggle" onchange="document.querySelector('.reference').classList.toggle('previewing', this.checked)"> Show print sheet preview</label>
     </div>
 
     {%- comment %}
@@ -43,19 +43,23 @@ title: Travel OTC Medication Reference
     <details class="folding">
       <summary>How to fold it</summary>
       <p class="print-settings">
-        In the print dialog set <strong>Margins: None</strong>, <strong>Scale: 100%</strong>
-        (not "Fit to page") and <strong>Orientation: Landscape</strong>. Chrome's
-        <em>Margins: Default</em> overrides the stylesheet and can add 16&nbsp;mm a side,
-        which pushes the fifth column off the paper.
+        Print <strong>landscape</strong> at <strong>100%</strong> &mdash; never "fit to page".
       </p>
       <ol>
-        <li>Check the ruler: the sheet is <strong>260&nbsp;mm</strong> wide, corner to corner. If it measures anything else, the scale is wrong.</li>
-        <li>Cut along the <strong>solid outer line</strong>. You get one piece, 260 &times; 171.2&nbsp;mm.</li>
-        <li>Fold in half along the <strong>horizontal centre dashed line, printed side facing out</strong>, so the bottom row goes behind the top row. You now have a 260 &times; 85.6&nbsp;mm strip printed on both faces.</li>
-        <li>Accordion-fold the strip on the four vertical dashed lines, alternating direction.</li>
+        <li>Measure it: <strong>260&nbsp;mm</strong> corner to corner. Anything else means the scale is off.</li>
+        <li>Cut the <strong>solid outline</strong>.</li>
+        <li>Fold in half on the <strong>horizontal crease, printed side out</strong>, so the bottom row goes behind the top.</li>
+        <li>Accordion-fold the <strong>four vertical creases</strong>.</li>
       </ol>
-      <p>Finished packet: 52 &times; 85.6&nbsp;mm, ten sheets thick &mdash; a credit-card footprint read in portrait. Panels 1&ndash;5 run left to right on one face, 6&ndash;10 on the other.</p>
-      <p><strong>Panels 6&ndash;10 print upside down on purpose.</strong> Folding the bottom row behind the top row turns it 180&deg;, so printing it inverted is what makes the back face read the right way up when you turn the card over.</p>
+      <p>
+        You get a 52 &times; 85.6&nbsp;mm packet, ten sheets thick: panel 6 backs 1, 7 backs 2, and so on.
+        The bottom row prints upside down on purpose &mdash; turn the card over <strong>left to right</strong>,
+        like a page, and it reads the right way up.
+      </p>
+      <p class="fold-note">
+        Clipped outer columns are the one thing step 1 will not catch: the sheet leaves only
+        ~9.5&nbsp;mm a side, so if the dialog eats more than that, set <strong>Margins: None</strong>.
+      </p>
     </details>
   </section>
 
