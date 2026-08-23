@@ -24,13 +24,21 @@ title: Travel OTC Medication Reference
       <label><input type="checkbox" id="preview-toggle" onchange="document.querySelector('.reference').classList.toggle('previewing', this.checked)"> Show the print sheet at actual size</label>
     </div>
 
-    <div class="capacity {% if panel_count > 10 %}over{% endif %}">
-      <strong>{{ panel_count }} of 10</strong> panels used.
-      {%- if panel_count > 10 %}
-        This no longer fits one single-sided sheet. Either raise <code>per_panel</code> for a category
-        in <code>_data/medications.yml</code>, or print the sheet double-sided for 20 panels.
-      {%- endif %}
+    {%- comment %}
+      Silent while the content fits. The sheet is a fixed 5x2 grid on a
+      fixed-height block, so an eleventh panel does not start a second sheet —
+      it opens an implicit third row that overflows the cut line, the crease
+      overlay and the page. Nothing else would tell you before you printed.
+    {% endcomment -%}
+    {%- if panel_count > 10 %}
+    <div class="capacity over">
+      <strong>{{ panel_count }} panels, and the sheet holds 10.</strong>
+      The extra {% if panel_count > 11 %}panels overflow{% else %}panel overflows{% endif %}
+      the cut line rather than starting a second sheet. Raise <code>per_panel</code> for a
+      category in <code>_data/medications.yml</code> to pack more medications onto each panel,
+      or shorten a panel's content.
     </div>
+    {%- endif %}
 
     <details class="folding">
       <summary>How to fold it</summary>
