@@ -1,8 +1,6 @@
 // Screen layout -------------------------------------------------------------
-// Everything in here is scoped to `screen`, so none of it reaches the printed
-// sheet and print never has to undo it. Structure and colour come from
-// _components.scss; this file only supplies screen sizing, plus the page
-// chrome that print hides outright.
+// Scoped to `screen` so none of it reaches the printed sheet. Screen sizing
+// only, plus the page chrome that print hides outright.
 
 @media screen {
   body { background: #eceae6; }
@@ -16,6 +14,9 @@
   }
   .screen-intro h1 { margin: .15rem 0 .4rem; }
   .screen-intro > p { color: var(--muted); }
+  // Sized outside the :not(.previewing) block below so the preview cannot
+  // restyle it: .eyebrow is shared with the cover panel.
+  .screen-intro .eyebrow { margin: 0 0 .25rem; font-size: .62rem; }
 
   .controls {
     display: flex;
@@ -69,6 +70,11 @@
     background: #fff8eb;
     color: var(--ink);
   }
+  .fold-note {
+    margin: .6rem 0 0;
+    font-size: .95em;
+    opacity: .8;
+  }
 
   .screen-footer {
     max-width: 900px;
@@ -78,119 +84,115 @@
     font-size: .75rem;
   }
 
-  // The panels as browsable cards, rather than as a foldable sheet.
-  //
-  // Scoped with :not(.previewing) because this and the actual-size preview
-  // below are ALTERNATIVES, not layers — a page is one or the other, never
-  // both. Written that way they can never match the same element, so neither
-  // has to undo the other and there is no specificity race to lose. Before
-  // this, the preview inherited the browsable panel's 600px min-height,
-  // border, radius and shadow, and had to reset each one by hand.
+  // The panels as browsable cards rather than a foldable sheet. :not() because
+  // this and the preview below are alternatives, never both at once — so they
+  // cannot match the same element and neither has to undo the other.
   .reference:not(.previewing) {
     .sheet-wrap { padding: 1rem; }
 
+    // Nested in .sheet so panel typography cannot reach the page chrome, which
+    // shares class names with it.
     .sheet {
       display: grid;
       grid-template-columns: repeat(2, minmax(320px, 430px));
       gap: 1rem;
       max-width: 900px;
       margin: 0 auto 2rem;
-    }
 
-    .panel {
-      min-height: 600px;
-      padding: 1.15rem;
-      border: 1px solid #d8d5cf;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.08);
-    }
+      .panel {
+        min-height: 600px;
+        padding: 1.15rem;
+        border: 1px solid #d8d5cf;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
 
-    .panel-num {
-      top: .5rem;
-      right: .7rem;
-      font-size: .6rem;
-      color: var(--line);
-    }
+      .panel-num {
+        top: .5rem;
+        right: .7rem;
+        font-size: .6rem;
+        color: var(--line);
+      }
 
-    .cover-mark {
-      margin-bottom: 2rem;
-      padding: .5rem .65rem;
-      border-left-width: 5px;
-      font-size: .7rem;
-    }
-    .cover h1 { font-size: 2.5rem; }
-    .eyebrow { margin: 0 0 .25rem; font-size: .62rem; }
-    .cover-note {
-      gap: .15rem;
-      padding: .8rem;
-      border-width: 1px;
-      border-radius: 10px;
-      font-size: .72rem;
-    }
+      .cover-mark {
+        margin-bottom: 2rem;
+        padding: .5rem .65rem;
+        border-left-width: 5px;
+        font-size: .7rem;
+      }
+      .cover h1 { font-size: 2.5rem; }
+      .eyebrow { margin: 0 0 .25rem; font-size: .62rem; }
+      .cover-note {
+        gap: .15rem;
+        padding: .8rem;
+        border-width: 1px;
+        border-radius: 10px;
+        font-size: .72rem;
+      }
 
-    .category-header {
-      gap: .7rem;
-      margin-bottom: .8rem;
-      padding-bottom: .7rem;
-      border-bottom-width: 2px;
-    }
-    .category-number {
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 9px;
-    }
-    .category-header h2 { font-size: 1.25rem; }
+      .category-header {
+        gap: .7rem;
+        margin-bottom: .8rem;
+        padding-bottom: .7rem;
+        border-bottom-width: 2px;
+      }
+      .category-number {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 9px;
+      }
+      .category-header h2 { font-size: 1.25rem; }
 
-    .med-list { gap: .65rem; }
+      .med-list { gap: .65rem; }
 
-    .med-card {
-      padding: .75rem;
-      border-width: 1px;
-      border-radius: 12px;
+      .med-card {
+        padding: .75rem;
+        border-width: 1px;
+        border-radius: 12px;
+      }
+
+      .med-name { margin: 0 0 .45rem; font-size: .95rem; }
+      .med-name em { margin-top: .08rem; font-size: .68rem; }
+      .med-id {
+        margin-right: .45rem;
+        padding: .25rem .35rem;
+        border-radius: 6px;
+        font-size: .64rem;
+      }
+
+      .info {
+        display: grid;
+        grid-template-columns: 3.4rem 1fr;
+        gap: .4rem;
+        padding: .42rem 0;
+        border-top-width: 1px;
+        font-size: .69rem;
+      }
+      .line { display: block; }
+      .label { font-size: .56rem; letter-spacing: .08em; }
+
+      .info.warn {
+        margin-top: .3rem;
+        padding: .45rem .55rem;
+        border-left-width: 3px;
+      }
+      .info.uses { font-size: .62rem; }
+
+      .caution-list { padding-left: 1rem; font-size: .75rem; }
+      .caution-list li { margin-bottom: .4rem; }
+      .notes-lines { gap: .9rem; margin-top: 1rem; }
+      .notes-lines span:not(.label) { border-bottom-width: 1px; }
     }
-
-    .med-name { margin: 0 0 .45rem; font-size: .95rem; }
-    .med-name em { margin-top: .08rem; font-size: .68rem; }
-    .med-id {
-      margin-right: .45rem;
-      padding: .25rem .35rem;
-      border-radius: 6px;
-      font-size: .64rem;
-    }
-
-    .info {
-      display: grid;
-      grid-template-columns: 3.4rem 1fr;
-      gap: .4rem;
-      padding: .42rem 0;
-      border-top-width: 1px;
-      font-size: .69rem;
-    }
-    .line { display: block; }
-    .label { font-size: .56rem; letter-spacing: .08em; }
-
-    .info.warn {
-      margin-top: .3rem;
-      padding: .45rem .55rem;
-      border-left-width: 3px;
-    }
-    .info.uses { font-size: .62rem; }
-
-    .caution-list { padding-left: 1rem; font-size: .75rem; }
-    .caution-list li { margin-bottom: .4rem; }
-    .notes-lines { gap: .9rem; margin-top: 1rem; }
-    .notes-lines span:not(.label) { border-bottom-width: 1px; }
 
     @media (max-width: 760px) {
       .sheet { grid-template-columns: 1fr; }
-      .panel { min-height: auto; }
+      .sheet .panel { min-height: auto; }
     }
   }
 
-  // Actual-size preview of the printed sheet. Scoped to screen along with
-  // everything else here, which also keeps `.reference.previewing x` from
-  // outranking the print rules whenever the toggle happens to be on at print
-  // time — that specificity clash used to push the sheet off the page.
+  // Actual-size preview of the printed sheet. Must stay inside @media screen:
+  // `.reference.previewing x` outranks the print rules, so unscoped it would
+  // hijack them whenever the toggle happened to be on at print time.
   .reference.previewing {
     @include print-sheet;
 
@@ -200,8 +202,8 @@
     }
     .sheet { box-shadow: 0 10px 30px rgba(0,0,0,.15); }
 
-    // Print clips a panel that overruns its 85.6mm; the preview lets it spill
-    // so you can see the problem before you spend a sheet of paper on it.
-    .panel { overflow: visible; }
+    // Print clips an overrunning panel; the preview spills it so you can see
+    // the problem first. Depth must match the mixin's or it loses to it.
+    .sheet .panel { overflow: visible; }
   }
 }

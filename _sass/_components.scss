@@ -1,20 +1,11 @@
 // Shared component rules ----------------------------------------------------
-// Structure and colour that the screen layout and the printed sheet agree on:
-// display modes, backgrounds, text colour, weights, border style and colour.
-//
-// Anything whose VALUE differs between the two media — every length, every
-// font size, every border width — lives in _screen.scss or _print.scss
-// instead. Keeping the split on that line means neither medium has to undo
-// the other's work, which is where the layout bugs kept coming from: two
-// layers styling the same element and the wrong one winning.
-//
-// Borders are declared here as style + colour only, with each medium
-// supplying its own width, so a hairline crease and an 18px screen border
-// stay one decision rather than two competing ones.
+// Structure and colour the screen layout and the printed sheet agree on.
+// Anything whose value differs between them — lengths, font sizes, border
+// widths — belongs in _screen.scss or _print.scss, so neither medium has to
+// undo the other. Borders are declared style + colour only for that reason,
+// with each medium supplying its own width.
 
-// Fold guides only mean anything on the printable sheet; _print.scss reveals
-// them for print and for the actual-size preview.
-.creases { display: none; }
+.creases { display: none; }   // revealed by _print.scss
 
 .panel {
   position: relative;
@@ -80,18 +71,6 @@
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  // Optical centring. `place-items: center` centres the LINE BOX, but a digit
-  // only occupies the part of it above the baseline — the empty descent space
-  // below leaves the glyph sitting high. Measured off the print output at
-  // 7.6% of the chip — 40px of clearance above the 1 against 65px below,
-  // which is 0.41mm on a 2.469mm font size, so 0.166em. The warning triangle
-  // runs about the same.
-  //
-  // Padding the top shifts the centred box down by HALF its value, so this is
-  // twice the measured error. Expressed in em it is a property of the font
-  // rather than of the chip, so one value serves both the 5.4mm print chip
-  // and the 2.25rem screen one.
-  padding-top: .166em * 2;
   background: var(--ink);
   color: white;
   font-weight: 900;
@@ -147,10 +126,8 @@
 .info.max .lines { font-weight: 800; }
 
 .info.warn {
-  // `border-top: 0` would only zero the WIDTH, which each medium then sets
-  // again further down the cascade — print was quietly drawing a .15mm rule
-  // across the top of every warning box. Killing the style instead states the
-  // intent once and cannot be reintroduced by a width.
+  // Kills the style, not the width: each medium sets a width further down the
+  // cascade, which would reinstate the rule.
   border-top-style: none;
   border-left-style: solid;
   border-left-color: #d19b45;
