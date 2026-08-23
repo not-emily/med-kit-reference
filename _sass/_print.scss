@@ -1,0 +1,205 @@
+// Printed sheet -------------------------------------------------------------
+// Every length here is in mm or pt, measured off the sheet geometry in
+// _tokens.scss. Structure and colour come from _components.scss; this file
+// only ever supplies sizing, so there is nothing to undo.
+//
+// The mixin is shared by the real print output and the on-screen actual-size
+// preview in _screen.scss, so what you check in the browser is what prints.
+
+@mixin print-sheet {
+  .sheet-wrap { padding: 0; }
+
+  .sheet {
+    position: relative;   // containing block for the crease overlay
+    width: $sheet-w;
+    height: $sheet-h;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat($cols, $card-w);
+    grid-template-rows: repeat($rows, $card-h);
+    grid-auto-flow: row;
+    gap: 0;
+    outline: .3mm solid $cut;   // cut line
+    background: white;
+  }
+
+  .panel {
+    width: $card-w;
+    height: $card-h;
+    // Not a leftover reset. These are grid items, and `min-height: auto`
+    // resolves to a content-based minimum that can beat an explicit height —
+    // so an overfull panel would stretch its row and break the fold geometry.
+    // Print gets away with it via `overflow: hidden`, but the preview sets
+    // `overflow: visible` on purpose and would grow without this.
+    min-height: 0;
+    padding: $pad;
+    overflow: hidden;
+  }
+
+  // Panels 6-10 print upside down on purpose. Folding the bottom half behind
+  // the top half rotates it 180 degrees, so this cancels out and the back
+  // face reads correctly when the finished card is turned over left-to-right.
+  .panel:nth-child(n + #{$cols + 1}) { transform: rotate(180deg); }
+
+  // Creases are their own elements, laid over the panels at absolute mm
+  // positions on the sheet, and drawn with dashed borders.
+  //
+  // They started as panel borders, which couples them to the panels: a border
+  // belongs to one panel and sits on the seam with its neighbour, so the
+  // rotated bottom row drew every crease a column out of place and stacked
+  // the first one onto the cut line. Owning them at sheet level fixes the
+  // position by measurement instead of by which element happens to be
+  // adjacent.
+  //
+  // A middle version drew them as repeating-gradient tiles and the horizontal
+  // one stopped at 239mm of 260mm. That was NOT a gradient problem: .sheet
+  // was inheriting `max-width: 900px` from the screen layout, which is
+  // 238.1mm, so the sheet box — and this overlay with it — was being clamped.
+  // The four verticals all fall inside 238mm, which is why only the long line
+  // showed it. Scoping the screen layout to its own medium removed the clamp.
+  .creases {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    span {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(#{$card-w} * var(--col));
+      border-left: $rule dashed $crease;
+    }
+
+    .crease-h {
+      top: $card-h;
+      right: 0;
+      bottom: auto;
+      left: 0;
+      border-left: 0;
+      border-top: $rule dashed $crease;
+    }
+  }
+
+  .panel-num {
+    top: 1.2mm;
+    right: 1.6mm;
+    font-size: 4.6pt;
+    color: #c7ccd0;
+  }
+
+  // Cover
+  .cover-mark {
+    padding: 1mm 1.4mm;
+    border-left-width: 1.2mm;
+    font-size: 5pt;
+  }
+  .cover h1 { margin-top: 2.5mm; font-size: 15pt; }
+  .eyebrow { margin: 1.8mm 0 .6mm; font-size: 4.6pt; }
+  .audience { margin: 1mm 0 0; font-size: 5.4pt; }
+  .cover-note {
+    gap: .3mm;
+    padding: 1.4mm;
+    border-width: .2mm;
+    border-radius: 1mm;
+    font-size: 4.8pt;
+    line-height: 1.2;
+  }
+
+  // Category header
+  .category-header {
+    gap: 1.5mm;
+    margin-bottom: 1.6mm;
+    padding-bottom: 1.2mm;
+    border-bottom-width: .35mm;
+  }
+  .category-number {
+    width: 5.4mm;
+    height: 5.4mm;
+    border-radius: 1.2mm;
+    font-size: 7pt;
+  }
+  .category-header h2 { font-size: 8.5pt; }
+  .cont { font-size: 6pt; }
+
+  // Medications
+  .med-list { gap: 1.6mm; }
+  .med-card {
+    padding: 1.5mm;
+    border-width: .18mm;
+    border-radius: 1mm;
+  }
+  .med-name {
+    margin: 0 0 1mm;
+    font-size: $fs-name;
+    line-height: 1.1;
+  }
+  .med-name em {
+    margin-top: .3mm;
+    font-size: $fs-ingr;
+    line-height: 1.15;
+  }
+  .med-id {
+    margin-right: 1mm;
+    padding: .4mm .8mm;
+    border-radius: .8mm;
+    font-size: 4.8pt;
+  }
+
+  // Run-in labels. A 7.5mm label gutter costs 17% of the usable width of a
+  // portrait panel against 10% of a landscape one, so the label goes inline
+  // and the text gets the whole measure.
+  .info {
+    display: block;
+    padding: .7mm 0;
+    border-top-width: .15mm;
+    font-size: $fs-body;
+    line-height: 1.15;
+  }
+  .label {
+    display: inline;
+    margin-right: 1.1mm;
+    font-size: $fs-label;
+    letter-spacing: .04em;
+  }
+  // Run the individual instructions together rather than breaking each onto
+  // its own line.
+  .line { display: inline; }
+  .line + .line::before { content: " "; }
+
+  .info.warn {
+    margin-top: .8mm;
+    padding: 1mm 1.2mm;
+    border-left-width: .6mm;
+  }
+  .info.uses { font-size: $fs-uses; }
+
+  // Cautions panel
+  .caution-list { padding-left: 3mm; font-size: 5.2pt; line-height: 1.2; }
+  .caution-list li { margin-bottom: 1mm; }
+  .notes-lines { gap: 3.2mm; margin-top: 2.5mm; }
+  .notes-lines span:not(.label) { border-bottom-width: .15mm; }
+}
+
+@media print {
+  @page { size: letter landscape; margin: 0; }
+
+  body {
+    background: white;
+    // The category chips, warning panels and paper tint carry meaning, so
+    // don't leave them to the browser's "background graphics" checkbox.
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .no-print { display: none !important; }
+
+  .reference {
+    @include print-sheet;
+
+    // No wrapper padding. Whatever margin the printer or the print dialog
+    // imposes is the margin; the sheet just centres itself in what is left.
+    // Adding our own padding on top only pushed the block off the right edge.
+    .sheet-wrap { padding: 0; }
+    .sheet { margin: 0 auto; }
+  }
+}

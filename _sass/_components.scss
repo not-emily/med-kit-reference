@@ -1,0 +1,169 @@
+// Shared component rules ----------------------------------------------------
+// Structure and colour that the screen layout and the printed sheet agree on:
+// display modes, backgrounds, text colour, weights, border style and colour.
+//
+// Anything whose VALUE differs between the two media — every length, every
+// font size, every border width — lives in _screen.scss or _print.scss
+// instead. Keeping the split on that line means neither medium has to undo
+// the other's work, which is where the layout bugs kept coming from: two
+// layers styling the same element and the wrong one winning.
+//
+// Borders are declared here as style + colour only, with each medium
+// supplying its own width, so a hairline crease and an 18px screen border
+// stay one decision rather than two competing ones.
+
+// Fold guides only mean anything on the printable sheet; _print.scss reveals
+// them for print and for the actual-size preview.
+.creases { display: none; }
+
+.panel {
+  position: relative;
+  background: var(--paper);
+  break-inside: avoid;
+}
+
+.panel-num {
+  position: absolute;
+  font-weight: 800;
+}
+
+// Cover panel
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cover-mark {
+  display: inline-block;
+  border-left-style: solid;
+  border-left-color: var(--accent-1);
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.cover h1 {
+  margin: 0;
+  line-height: .98;
+}
+
+.eyebrow {
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.audience {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.cover-note {
+  display: grid;
+  border-style: solid;
+  border-color: #d9b06f;
+  background: #fff7e8;
+}
+
+// Category panels
+
+.category-header {
+  display: flex;
+  align-items: center;
+  border-bottom-style: solid;
+  border-bottom-color: var(--line);
+}
+
+.category-number {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: white;
+  font-weight: 900;
+}
+
+.category-header h2 { margin: 0; }
+
+.cont {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--muted);
+}
+
+// Medications
+
+.med-list {
+  display: grid;
+  align-content: start;
+}
+
+.med-card {
+  border-style: solid;
+  border-color: var(--line);
+  background: white;
+}
+
+.med-name em {
+  display: block;
+  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.med-id {
+  display: inline-block;
+  background: var(--ink);
+  color: white;
+  font-weight: 900;
+  vertical-align: .1em;
+}
+
+.info {
+  margin: 0;
+  border-top-style: solid;
+  border-top-color: var(--line);
+}
+
+.label {
+  font-weight: 900;
+  color: var(--muted);
+}
+
+.info.max .lines { font-weight: 800; }
+
+.info.warn {
+  // `border-top: 0` would only zero the WIDTH, which each medium then sets
+  // again further down the cascade — print was quietly drawing a .15mm rule
+  // across the top of every warning box. Killing the style instead states the
+  // intent once and cannot be reintroduced by a width.
+  border-top-style: none;
+  border-left-style: solid;
+  border-left-color: #d19b45;
+  background: #fff8eb;
+}
+.info.warn .label { color: #8b651f; }
+
+.info.uses { color: var(--muted); }
+
+// Cautions panel
+
+.caution-list { margin: 0; }
+.warn-number { background: #d19b45 !important; }
+
+.notes-lines { display: grid; }
+.notes-lines span:not(.label) {
+  border-bottom-style: solid;
+  border-bottom-color: var(--line);
+}
+
+// Category accents
+
+.category-1 .category-number { background: var(--accent-1); }
+.category-2 .category-number { background: var(--accent-2); }
+.category-3 .category-number { background: var(--accent-3); }
+.category-4 .category-number { background: var(--accent-4); }
+.category-5 .category-number { background: var(--accent-5); }
+.category-6 .category-number { background: var(--accent-6); }

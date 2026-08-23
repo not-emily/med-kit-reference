@@ -1,0 +1,62 @@
+// Sheet geometry -----------------------------------------------------------
+// One US Letter LANDSCAPE sheet, single-sided. Cut out a 260 x 171.2mm block,
+// fold it in half along the horizontal centre crease with the printed side
+// OUT, then accordion fold the resulting 260 x 85.6mm strip on the four
+// vertical creases. Finished packet is a credit-card footprint read in
+// portrait (52 x 85.6mm), panels 1-5 on one face and 6-10 on the other.
+//
+// Cards are portrait because the fixed overhead of a med card (padding,
+// borders, info-row rules) is ~8mm no matter the shape. Against a 39mm
+// landscape panel that is 40% of the budget; against a 72mm portrait panel
+// it is 22%. The extra line wrapping in a narrow column costs less than the
+// overhead reclaimed, which is what stopped the panels overflowing.
+//
+// 52mm rather than the true card 53.98mm. Five columns is the binding
+// constraint: 5 x 53.98 = 269.9mm against Letter's 279.4mm long edge leaves
+// 4.75mm a side, which is inside the unprintable margin of most printers —
+// and well inside Chrome's "Margins: Default", which overrides @page and can
+// eat 16mm a side. 52mm gives a 260mm sheet and 9.7mm a side to absorb that.
+// The finished card is 2mm narrower than a credit card and still fills the
+// sleeve.
+
+$card-w: 52mm;
+$card-h: 85.6mm;
+$cols: 5;
+$rows: 2;
+$sheet-w: $card-w * $cols;   // 260mm
+$sheet-h: $card-h * $rows;   // 171.2mm
+$pad: 2.5mm;
+$rule: .18mm;
+$crease: #b9bec3;
+$cut: #9aa0a6;
+
+// Print type scale. Tune here — every print size derives from these.
+$fs-body: 5.6pt;
+$fs-label: 4.6pt;
+$fs-name: 7.4pt;
+$fs-ingr: 5.1pt;
+$fs-uses: 5.3pt;
+
+:root {
+  --ink: #20252b;
+  --muted: #68717b;
+  --paper: #fbfaf7;
+  --line: #dfe2e4;
+  --accent-1: #b65f4d;
+  --accent-2: #5f8a6d;
+  --accent-3: #c18a3c;
+  --accent-4: #5e7894;
+  --accent-5: #78658e;
+  --accent-6: #c57438;
+}
+
+* { box-sizing: border-box; }
+
+// The page background is a screen concern and is set in _screen.scss; print
+// paints its own.
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.35;
+}

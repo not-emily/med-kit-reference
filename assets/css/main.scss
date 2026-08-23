@@ -1,4 +1,10 @@
 ---
 ---
 
-@import "med-card";
+// Order matters: shared structure first, then each medium's sizing on top.
+// _screen.scss uses the print-sheet mixin for its actual-size preview, so
+// _print.scss has to be imported before it.
+@import "tokens";
+@import "components";
+@import "print";
+@import "screen";
