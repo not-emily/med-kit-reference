@@ -12,7 +12,7 @@ categories:
         max: Do not exceed 6 tablets in 24 hours.
         warnings: []
         uses: Minor aches and pains, fever reduction
-        drugs_url: https://www.drugs.com/advil.html
+        drugs_url: https://www.drugs.com/advil
 
       - id: 1b
         name: Tylenol
@@ -25,7 +25,7 @@ categories:
           - Do not use with other medicines containing acetaminophen.
           - Extra strength, rapid-release gels.
         uses: Minor aches and pains, fever reduction
-        drugs_url: https://www.drugs.com/tylenol.html
+        drugs_url: https://www.drugs.com/tylenol
 
       - id: 1c
         name: Excedrin Migraine
@@ -35,9 +35,9 @@ categories:
         max: Do not take more than 2 caplets in 24 hours.
         warnings:
           - Do not use for 10 or more days per month.
-          - "Under 18 years old: ask a doctor."
+          - "Under 18 years old, ask a doctor."
         uses: Migraine
-        drugs_url: https://www.drugs.com/excedrin-migraine.html
+        drugs_url: https://www.drugs.com/excedrin-migraine
 
   - id: 2
     name: Digestive
@@ -53,7 +53,7 @@ categories:
           - Do not use within 1 hour after taking an antacid or milk.
           - Do not chew or crush tablets.
         uses: Constipation (relief in 6–12 hours)
-        drugs_url: https://www.drugs.com/dulcolax.html
+        drugs_url: https://www.drugs.com/dulcolax
 
       - id: 2b
         name: Imodium
@@ -65,7 +65,7 @@ categories:
         warnings:
           - Drink plenty of clear fluids to help prevent dehydration caused by diarrhea.
         uses: Diarrhea
-        drugs_url: https://www.drugs.com/imodium.html
+        drugs_url: https://www.drugs.com/imodium
 
   - id: 3
     name: Nausea + Heartburn
@@ -81,7 +81,7 @@ categories:
         warnings:
           - Drowsiness may occur.
         uses: Nausea, vomiting, dizziness
-        drugs_url: https://www.drugs.com/mtm/dramamine-less-drowsy.html
+        drugs_url: https://www.drugs.com/mtm/dramamine-less-drowsy
 
       - id: 3b
         name: TUMS
@@ -92,7 +92,7 @@ categories:
         warnings:
           - Do not take for symptoms that persist for more than 2 weeks.
         uses: Heartburn, sour stomach, acid indigestion, upset stomach
-        drugs_url: https://www.drugs.com/mtm/tums.html
+        drugs_url: https://www.drugs.com/mtm/tums
 
   - id: 4
     name: Cold + Flu
@@ -107,7 +107,7 @@ categories:
         max: ""
         warnings: []
         uses: Cough, irritated or sore throat
-        drugs_url: https://www.drugs.com/mtm/menthol-lozenge-oral-mucous-membrane.html
+        drugs_url: https://www.drugs.com/mtm/menthol-lozenge-oral-mucous-membrane
 
       - id: 4b
         name: DayQuil
@@ -117,7 +117,7 @@ categories:
         max: ""
         warnings: []
         uses: Headache, fever, sore throat, minor aches and pains, nasal congestion, sinus pressure, cough
-        drugs_url: https://www.drugs.com/mtm/dayquil-cold-and-flu.html
+        drugs_url: https://www.drugs.com/mtm/dayquil-cold-and-flu
 
       - id: 4c
         name: NyQuil
@@ -125,9 +125,10 @@ categories:
         take:
           - DOSING TO BE ADDED FROM CURRENT PRODUCT LABEL.
         max: ""
-        warnings: []
+        warnings:
+          - Causes drowsiness. For nighttime use — do not drive
         uses: Headache, fever, sore throat, minor aches and pains, sneezing, runny nose, cough
-        drugs_url: https://www.drugs.com/mtm/nyquil-cold-and-flu.html
+        drugs_url: https://www.drugs.com/mtm/nyquil-cold-and-flu
 
   - id: 5
     name: Allergy
@@ -142,7 +143,7 @@ categories:
         warnings:
           - Drowsiness may occur.
         uses: Sneezing, runny nose, itchy throat, itchy/watery eyes, hay fever, upper respiratory allergies, common cold
-        drugs_url: https://www.drugs.com/benadryl.html
+        drugs_url: https://www.drugs.com/benadryl
 
   - id: 6
     name: Heat Exhaustion
@@ -157,4 +158,4 @@ categories:
         max: Do not exceed 20 tablets in 24 hours.
         warnings: []
         uses: Heat fatigue, muscle cramps, heat exhaustion, replaces lost electrolytes, helps provide rapid rehydration
-        drugs_url: https://www.drugs.com/cdi/medi-lyte.html
+        drugs_url: https://www.drugs.com/cdi/medi-lyte
