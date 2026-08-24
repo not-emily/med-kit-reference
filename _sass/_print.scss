@@ -38,6 +38,15 @@
     // row turns it 180 degrees, and this cancels that out.
     .panel:nth-child(n + #{$cols + 1}) { transform: rotate(180deg); }
 
+    // It also prints right to left. The fold puts panel n's back against the
+    // panel in the same column, and turning the opened strip over like a page
+    // mirrors the columns — so laying the back row out in reading order is
+    // what would come back reversed. Panels past the tenth stay auto-placed,
+    // so an overflowing eleventh still opens a visible third row.
+    @for $i from 1 through $cols {
+      .panel:nth-child(#{$cols + $i}) { grid-area: 2 / #{$cols + 1 - $i}; }
+    }
+
     // Positioned on the sheet rather than drawn as panel borders, which would
     // tie each crease to a panel — and half the panels are rotated.
     .creases {

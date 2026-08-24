@@ -52,9 +52,10 @@ title: Travel OTC Medication Reference
         <li>Accordion-fold the <strong>four vertical creases</strong>.</li>
       </ol>
       <p>
-        You get a 52 &times; 85.6&nbsp;mm packet, ten sheets thick: panel 6 backs 1, 7 backs 2, and so on.
-        The bottom row prints upside down on purpose &mdash; turn the card over <strong>left to right</strong>,
-        like a page, and it reads the right way up.
+        You get a 52 &times; 85.6&nbsp;mm packet, ten sheets thick. Opened out, the front reads panels
+        1&ndash;5 left to right; turn the strip over <strong>left to right</strong>, like a page, and the
+        back reads 6&ndash;10, the right way up. That is why the bottom row prints reversed and upside
+        down &mdash; the fold mirrors the columns and the turn mirrors them back.
       </p>
       <p class="fold-note">
         Clipped outer columns are the one thing step 1 will not catch: the sheet leaves only
