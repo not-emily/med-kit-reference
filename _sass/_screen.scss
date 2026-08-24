@@ -183,7 +183,7 @@
       .info.uses { font-size: .62rem; }
 
       // No rule above it, no gutter: an extra, not another labelled row.
-      .med-more { margin: .5rem 0 0; font-size: .62rem; }
+      .med-more { margin: .5rem 0 0; font-size: .62rem; text-align: end; }
       .med-more a {
         color: var(--muted);
         text-decoration-color: var(--line);
