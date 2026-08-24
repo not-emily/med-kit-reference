@@ -59,9 +59,9 @@ categories:
         name: Imodium
         ingredient: Loperamide Hydrochloride 2 mg
         take:
-          - Take 2 caplets after the first loose stool.
-          - Take 1 caplet after each subsequent loose stool.
-        max: Do not take more than 3 caplets in 24 hours.
+          - Take 2 softgels after the first loose stool.
+          - Take 1 softgel after each subsequent loose stool.
+        max: Do not take more than 4 caplets in 24 hours.
         warnings:
           - Drink plenty of clear fluids to help prevent dehydration caused by diarrhea.
         uses: Diarrhea
@@ -113,9 +113,10 @@ categories:
         name: DayQuil
         ingredient: Acetaminophen 325 mg, Dextromethorphan HBr 10 mg, Phenylephrine HCl 5 mg
         take:
-          - DOSING TO BE ADDED FROM CURRENT PRODUCT LABEL.
-        max: ""
-        warnings: []
+          - Take 2 LiquiCaps with water ever 4h
+        max: "Do not exceed 8 LiquiCaps per 24h"
+        warnings:
+          - Do not use with any other drug containing acetaminophen
         uses: Headache, fever, sore throat, minor aches and pains, nasal congestion, sinus pressure, cough
         drugs_url: https://www.drugs.com/mtm/dayquil-cold-and-flu
 
@@ -123,10 +124,11 @@ categories:
         name: NyQuil
         ingredient: Acetaminophen 325 mg, Dextromethorphan HBr 15 mg, Doxylamine succinate 6.25 mg
         take:
-          - DOSING TO BE ADDED FROM CURRENT PRODUCT LABEL.
-        max: ""
+          - Take 2 LiquiCaps with water every 6h
+        max: "Do not exceed 8 LiquiCaps per 24h"
         warnings:
           - Causes drowsiness. For nighttime use — do not drive
+          - Do not use with any other drug containing acetaminophen
         uses: Headache, fever, sore throat, minor aches and pains, sneezing, runny nose, cough
         drugs_url: https://www.drugs.com/mtm/nyquil-cold-and-flu
 
