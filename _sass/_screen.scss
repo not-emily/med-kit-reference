@@ -5,10 +5,8 @@
 @media screen {
   body { background: #eceae6; }
 
-  // The mirror of .no-print. Nothing here restores the display, because the
-  // only rules that ever reveal these blocks are in the print mixin — included
-  // both by @media print, where this rule does not exist, and by the preview
-  // below, whose deeper selectors outrank it.
+  // The mirror of .no-print. Nothing restores the display: the print mixin is
+  // the only thing that reveals these, and its deeper selectors outrank this.
   .print-only { display: none; }
 
   // Page chrome (all of it inside .no-print)
@@ -88,6 +86,7 @@
     padding: 0 1rem;
     color: var(--muted);
     font-size: .75rem;
+    text-align: center;
   }
 
   // The panels as browsable cards rather than a foldable sheet. :not() because
@@ -157,10 +156,9 @@
         border-radius: 12px;
       }
 
-      .med-name { margin: 0 0 .45rem; font-size: .95rem; }
-      .med-name em { margin-top: .08rem; font-size: .68rem; }
+      .med-name { gap: .45rem; margin: 0 0 .45rem; font-size: .95rem; }
+      .med-name em { font-size: .68rem; }
       .med-id {
-        margin-right: .45rem;
         padding: .25rem .35rem;
         border-radius: 6px;
         font-size: .64rem;
@@ -184,8 +182,7 @@
       }
       .info.uses { font-size: .62rem; }
 
-      // The card's one affordance the paper cannot have, so it reads as an
-      // extra rather than as another labelled row: no rule above it, no gutter.
+      // No rule above it, no gutter: an extra, not another labelled row.
       .med-more { margin: .5rem 0 0; font-size: .62rem; }
       .med-more a {
         color: var(--muted);
@@ -223,11 +220,9 @@
     // the problem first. Depth must match the mixin's or it loses to it.
     .sheet .panel { overflow: visible; }
 
-    // Screen-only panel content is dropped here for the same reason: the point
-    // of the preview is what comes out of the printer, and a link that prints
-    // as nothing would still take up height and mask a panel that overruns.
-    // Scoped to .sheet so the page chrome above — itself .no-print, and where
-    // the toggle you would need to switch back lives — stays put.
+    // Dropped for the same reason: a link that prints as nothing would still
+    // hold height here and mask a panel that overruns. Scoped to .sheet so the
+    // page chrome — itself .no-print, and holding the toggle — stays put.
     .sheet .no-print { display: none; }
   }
 }

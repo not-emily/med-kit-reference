@@ -58,10 +58,8 @@
   background: #fff7e8;
 }
 
-// Cover QR. Paper only: on screen you are already at the page it points to,
-// so the link out is what a screen reader of the card wants instead. Both the
-// display and the sizing live in the print mixin, which is the only place the
-// block is ever visible — see the .print-only note in _screen.scss.
+// Cover QR. Paper only — on screen you are already where it points. Display
+// and sizing live in the print mixin, the only place it is ever visible.
 
 .qr { flex: 0 0 auto; }
 .qr-caption { color: var(--muted); }
@@ -112,6 +110,14 @@
   background: white;
 }
 
+// Two columns, not a chip inline in the heading: inline, the ingredient broke
+// to the card's left edge, under the square rather than under the name.
+.med-name {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+}
+
 .med-name em {
   display: block;
   color: var(--muted);
@@ -119,12 +125,14 @@
   font-weight: 400;
 }
 
+// Sized by its padding, so it stays a chip on the name rather than a block
+// scaled to the text beside it.
 .med-id {
-  display: inline-block;
+  display: grid;
+  place-items: center;
   background: var(--ink);
   color: white;
   font-weight: 900;
-  vertical-align: .1em;
 }
 
 .info {
@@ -172,9 +180,7 @@
   height: 1.15em;
 }
 
-// Same em sizing as .icon-warn, and currentColor for the same reason: it sits
-// inside the link, so it picks up the muted-to-ink hover rather than fighting
-// it. Only ever rendered inside a screen-only link, so its one size lives here.
+// Sized and filled like .icon-warn, so it picks up the link's hover colour.
 .icon-external {
   width: .85em;
   height: .85em;

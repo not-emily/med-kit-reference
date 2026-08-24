@@ -106,7 +106,7 @@ title: Travel OTC Medication Reference
           {%- endif %}
 
           <section class="med-card" id="{{ med.id }}">
-            <h3 class="med-name"><span class="med-id">{{ med.id }}</span>{{ med.name }}<em>{{ med.ingredient }}</em></h3>
+            <h3 class="med-name"><span class="med-id">{{ med.id }}</span><span class="med-title">{{ med.name }}<em>{{ med.ingredient }}</em></span></h3>
 
             <p class="info take"><span class="label">TAKE</span><span class="lines">{% for instruction in med.take %}<span class="line">{{ instruction }}</span>{% endfor %}</span></p>
 

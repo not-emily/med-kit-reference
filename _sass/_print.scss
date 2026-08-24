@@ -80,10 +80,8 @@
     .cover h1 { margin-top: 2.5mm; font-size: 15pt; }
     .eyebrow { margin: 1.8mm 0 .6mm; font-size: 4.6pt; }
     .audience { margin: 1mm 0 0; font-size: 5.4pt; }
-    // 22mm across 33 modules — 25 of data plus the 4-module quiet zone a side —
-    // puts a module at .67mm, well inside what an inkjet holds and what a phone
-    // resolves at arm's length. Shrinking this is the first thing that will
-    // stop the code scanning.
+    // 22mm over 33 modules puts a module at .67mm. Shrinking this is the first
+    // thing that will stop the code scanning.
     .cover-qr {
       display: flex;
       align-items: center;
@@ -127,17 +125,16 @@
       border-radius: 1mm;
     }
     .med-name {
+      gap: 1mm;
       margin: 0 0 1mm;
       font-size: $fs-name;
       line-height: 1.1;
     }
     .med-name em {
-      margin-top: .3mm;
       font-size: $fs-ingr;
       line-height: 1.15;
     }
     .med-id {
-      margin-right: 1mm;
       padding: .4mm .8mm;
       border-radius: .8mm;
       font-size: 4.8pt;
